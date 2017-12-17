@@ -1,21 +1,27 @@
 // modules
-import   React    from 'react'
-import { render } from 'react-dom'
+import   React      from 'react'
+import { render }   from 'react-dom'
+import { Provider } from 'react-redux'
+
+// import store
+import Store from './store'
 
 // style
 require('./main.css')
 
 // local storage
-import alt from './library/alt'
-import storage from './library/storage'
-import persist from './library/persist'
-persist(alt, storage, 'root')
+import alt          from './library/alt'
+import persist      from './library/persist'
+import localStorage from './library/localStorage'
+persist(alt, localStorage, 'store')
 
 // components
 import App from './components/App'
 
 // render App
 render(
-    <App />,
+    <Provider store={Store}>
+        <App />
+    </Provider>,
     document.getElementById('root')
 )

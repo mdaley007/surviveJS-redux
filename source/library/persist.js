@@ -1,3 +1,10 @@
+
+const persistedState = localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem('reduxState')) : {}
+
+
+
+
+
 import makeFinalStore from 'alt-utils/lib/makeFinalStore'
 
 export default function(alt, storage, storeName) {
