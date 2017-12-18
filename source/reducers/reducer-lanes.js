@@ -13,12 +13,10 @@ const laneReducer = (state=initialState, action) => {
                 name: 'New Lane',
                 notes: [],
             }
-            //const newLanes = state.lanes.concat(newLane)
-            //console.log(newLanes)
-            return {
+            return [
                 ...state,
-
-            }
+                newLane,
+            ]
         case 'UPDATE':
         return {
             ...state,
