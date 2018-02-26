@@ -1,56 +1,74 @@
 // modules
-import React, { Component } from 'react'
+import React from 'react'
 
-export default class Editable extends Component {
+// Editable Class
+export default class Editable extends React.Component {
+
     render() {
-        const {value, onEdit, onValueClick, editing, onDelete, ...props} = this.props
+        const editing = this.props.editing
 
         return (
-            <div {...props}>
-                {editing ? this.renderEdit() : this.renderValue()}
+            <div>
+                {editing
+                    ? this.renderEdit()
+                    : this.renderValue()
+                }
             </div>
         )
     }
     renderEdit = () => {
+        const value = this.props.value
+
         return (
             <input
                 type='text'
-                ref={ (e) => e ? e.selectionStart = this.props.value.length : null }
+                ref={ (e) => e
+                    ? e.selectionStart = value.length
+                    : null
+                }
                 autoFocus={true}
-                defaultValue={this.props.value}
+                defaultValue={value}
                 onBlur={this.finishEdit}
                 onKeyPress={this.checkEnter}
             />
         )
     }
     renderValue = () => {
-        const onDelete = this.props.onDelete
+        const {value, onDelete, setEditing, styleClass} = this.props
 
         return (
-            <div onClick={this.props.onValueClick}>
-                <span className='value'>{this.props.value}</span>
-                {onDelete ? this.renderDelete() : null}
+            <div
+                className={styleClass}
+                onClick={() => setEditing(true)}
+            >
+                <span className='value'>{value}</span>
+                { onDelete ? this.renderDelete() : null }
             </div>
         )
     }
     renderDelete = () => {
+        const onDelete = this.props.onDelete
+
         return (
             <button
                 className='delete'
-                onClick={this.props.onDelete}
+                onClick={onDelete}
             >x</button>
         )
     }
     checkEnter = (e) => {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             this.finishEdit(e)
         }
     }
     finishEdit = (e) => {
+        const { onEdit, setEditing } = this.props
         const value = e.target.value
 
-        if(this.props.onEdit) {
-            this.props.onEdit(value)
+        if(onEdit && value) {
+            onEdit(value)
         }
+
+        setEditing(false)
     }
-}
+}  // end of class

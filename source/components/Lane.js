@@ -1,114 +1,117 @@
 // modules
-import AltContainer from 'alt-container'
-import React, { Component } from 'react'
-import { DropTarget } from 'react-dnd'
-
-// components
-import Notes from './Notes'
-import Editable from './Editable'
-
-// flux
-import NoteActions from '../actions/NoteActions'
-import NoteStore from '../stores/NoteStore'
-import LaneActions from '../actions/LaneActions'
-
-// dnd
+import   React                from 'react'
+import { DropTarget }         from 'react-dnd'
+import { connect }            from 'react-redux'
+import { bindActionCreators } from 'redux'
+// constants
 import ItemTypes from '../constants/itemTypes'
+// components
+import Editable from './Editable'
+import Notes    from './Notes'
+// actions
+import laneActions   from '../actions/actions-lanes'
+import noteActions   from '../actions/actions-notes'
+import laneSelectors from '../selectors/selectors-lanes'
+
+// note-target-config
 const noteTarget = {
     hover(targetProps, monitor) {
-        const sourceProps = monitor.getItem()
-        const sourceId = sourceProps.id
+        const sourceId = monitor.getItem().id
+        const targetId = targetProps.laneId
+        const {lane, attachNote} = targetProps
 
-        if(!targetProps.lane.notes.length) {
-            LaneActions.attachToLane({
-                laneId: targetProps.lane.id,
-                noteId: sourceId
-            })
+        if(lane.get('notes').count() === 0) {
+            attachNote(targetId, sourceId)
         }
     }
 }
 
+// Lane Class
+@connect(() => mapStateToProps, () => mapDispatchToProps)
 @DropTarget(ItemTypes.NOTE, noteTarget, (connect) => ({
     connectDropTarget: connect.dropTarget()
 }))
-export default class Lane extends Component {
+export default class Lane extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            editing: false,
+        }
+    }
     render() {
-        const {connectDropTarget, lane, ...props} = this.props
+        const editing = this.state.editing
+        const { connectDropTarget, lane, updateLane, deleteLane, moveNote } = this.props
+        const laneId    = lane.get('id')
+        const laneName  = lane.get('name')
+        const laneNotes = lane.get('notes')
+
         return connectDropTarget(
-            <div {...props}>
-                <div className='lane-header' onClick={this.activateLaneEdit}>
+            <div className='lane'>
+
+                <div className='lane-header'>
                     <div className='lane-add-note'>
                         <button onClick={this.addNote}>+</button>
                     </div>
                     <Editable
-                        className='lane-name'
-                        editing={lane.editing}
-                        value={lane.name}
-                        onEdit={this.editName}
+                        styleClass='lane-name'
+                        editing={editing}
+                        value={laneName}
+                        onEdit={updateLane.bind(null, laneId)}
+                        setEditing={this.setEditing}
                     />
                     <div className='lane-delete'>
-                        <button onClick={this.deleteLane}>x</button>
+                        <button onClick={() => deleteLane(lane)}>x</button>
                     </div>
                 </div>
-                <AltContainer
-                    stores={[NoteStore]}
-                    inject={{ notes: () => NoteStore.getNotesByIds(lane.notes) }}
-                >
-                    <Notes
-                        onValueClick={this.activateNoteEdit}
-                        onEdit={this.editNote}
-                        onDelete={this.deleteNote}
-                    />
-                </AltContainer>
+
+                <Notes
+                    notes={laneNotes}
+                    onDelete={this.deleteNote}
+                    onMove={moveNote}
+                />
+
             </div>
         )
     }
-    editNote(id, task) {
-        if(!task.trim()) {
-            NoteActions.update({id, editing: false})
-            return
-        }
-        NoteActions.update({id, task, editing: false})
+    addNote = () => {
+        const { laneId, createNote, attachNote } = this.props
+
+        const newNote = createNote().payload
+        attachNote(laneId, newNote.id)
     }
-    addNote = (e) => {
-        e.stopPropagation()
+    deleteNote = (noteId) => {
+        const { laneId, deleteNote, detachNote } = this.props
 
-        const laneId = this.props.lane.id
-        const note = NoteActions.create({task: 'New task'})
-
-        LaneActions.attachToLane({
-            noteId: note.id,
-            laneId
+        detachNote(laneId, noteId)
+        deleteNote(noteId)
+    }
+    setEditing = (newState) => {
+        this.setState({
+            editing: newState
         })
     }
-    deleteNote = (noteId, e) => {
-        e.stopPropagation()
+}
 
-        const laneId = this.props.lane.id
+// smart-component features
+const mapStateToProps = (state, props) => {
+    const laneId = props.laneId
 
-        LaneActions.detachFromLane({laneId, noteId})
-        NoteActions.delete(noteId)
+    return {
+        lane: laneSelectors.getLaneById(state, laneId)
     }
-    editName = (name) => {
-        const laneId = this.props.lane.id
+}
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(
+        {
+            createNote: noteActions.createNote,
+            deleteNote: noteActions.deleteNote,
 
-        if(!name.trim()) {
-            LaneActions.update({id: laneId, editing: false})
-            return
-        }
-        LaneActions.update({id: laneId, name, editing: false})
-    }
-    deleteLane = () => {
-        const laneId = this.props.lane.id
-
-        LaneActions.delete(laneId)
-    }
-    activateLaneEdit = () => {
-        const laneId = this.props.lane.id
-
-        LaneActions.update({id: laneId, editing: true})
-    }
-    activateNoteEdit(id) {
-        NoteActions.update({id, editing: true})
-    }
+            updateLane: laneActions.updateLane,
+            deleteLane: laneActions.deleteLane,
+            attachNote: laneActions.attachNote,
+            detachNote: laneActions.detachNote,
+            moveNote:   laneActions.moveNote,
+        },
+        dispatch,
+    )
 }

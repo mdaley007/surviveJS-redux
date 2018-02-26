@@ -1,3 +1,4 @@
 export default {
-    NOTE: 'note',
+    LANE: 'LANE',
+    NOTE: 'NOTE',
 }

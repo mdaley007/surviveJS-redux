@@ -1,66 +1,54 @@
 // modules
-import   AltContainer         from 'alt-container'
-import   React, { Component } from 'react'
+import   React                from 'react'
 import { DragDropContext }    from 'react-dnd'
 import   HTML5Backend         from 'react-dnd-html5-backend'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
-
-// import actions
-import * as laneActions from '../actions/actions-lanes'
-
 // components
 import Lanes from './Lanes'
+// redux
+import laneActions   from '../actions/actions-lanes'
+import laneSelectors from '../selectors/selectors-lanes'
 
-// flux
-import LaneActions from '../actions/LaneActions'
-import LaneStore   from '../stores/LaneStore'
-
+// class: App
 @DragDropContext(HTML5Backend)
-class App extends Component {
-
+@connect(() => mapStateToProps, () => mapDispatchToProps)
+export default class App extends React.Component {
     render() {
+        const {laneIds, createLane, updateLane, deleteLane } = this.props
+
         return (
             <div>
 
                 <button
                     className='add-lane'
-                    //onClick={this.addLane}
-                    onClick={this.props.create}
+                    onClick={() => createLane()}
                 >+</button>
 
-                <AltContainer
-                    stores={[LaneStore]}
-                    inject={{ lanes: () => LaneStore.getState().lanes || [] }}
-                >
-                    <Lanes />
-                </AltContainer>
+                <Lanes
+                    laneIds={laneIds}
+                    onEdit={updateLane}
+                    onDelete={deleteLane}
+                />
 
             </div>
         )
     }
-    addLane() {
-        LaneActions.create({ name: 'New Lane' })
-    }
 }
+
 // smart-component features
 const mapStateToProps = (state) => {
-    return {}
+    return {
+        laneIds: laneSelectors.getLaneIds(state)
+    }
 }
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators(
         {
-            create:         laneActions.create,
-            update:         laneActions.update,
-            deleteLane:     laneActions.deleteLane,
-            attachToLane:   laneActions.attachToLane,
-            detachFromLane: laneActions.detachFromLane,
-            move:           laneActions.move,
+            createLane: laneActions.createLane,
+            updateLane: laneActions.updateLane,
+            deleteLane: laneActions.deleteLane,
         },
         dispatch,
     )
 }
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps,
-)(App)

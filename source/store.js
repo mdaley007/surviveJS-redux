@@ -1,32 +1,40 @@
+// should depend on actual environment variable
 var environment = 'development'
 
-// import modules
+// modules
+import   Immutable             from 'immutable'
 import { applyMiddleware,
-         createStore }            from 'redux'
-import   logger                   from 'redux-logger'
-import { persistStore,
-         persistCombineReducers } from 'redux-persist'
-import   storage                  from 'redux-persist/es/storage'
-//import { AsyncStorage } from 'react-native'
+         createStore }         from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import   logger                from 'redux-logger'
 
-// import reducers
-const reducerConfig = {
-    key: 'root',
-    storage,
-}
-import reducers from './reducers'
-const reducer = persistCombineReducers(reducerConfig, reducers)
+// rootReducer
+import rootReducer from './reducers'
 
-// define middleware
-var middleware
+// get initial state
+const persistedStateKey = 'surviveJS'
+const initialState = localStorage.getItem(persistedStateKey)
+    ? Immutable.fromJS(JSON.parse(localStorage.getItem(persistedStateKey)))
+    : undefined
+
+// middleware
+let middleware
+const middlewareList = []
 if (environment == 'production') {
-    middleware = applyMiddleware()
+    middleware = applyMiddleware( ...middlewareList )
 } else {  // environment == 'development'
-    middleware = applyMiddleware(logger)
+    middlewareList.push(logger)
+    middleware = composeWithDevTools(applyMiddleware( ...middlewareList ))
 }
+
 // create store
-let store     = createStore(reducers, middleware)
-//let persistor = persistStore(store)
+const store = createStore(rootReducer, initialState, middleware)
+
+// update persisted state
+store.subscribe(() => {
+    const state = store.getState().toJS()
+    localStorage.setItem(persistedStateKey, JSON.stringify(state))
+})
 
 // export store
-export default store //{persistor, store}
+export default store

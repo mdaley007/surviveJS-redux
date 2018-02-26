@@ -1,15 +1,43 @@
-export const create = () => {
+// modules
+import uuid from 'uuid'
+// constants
+import actionTypes from '../constants/actionTypes'
+
+// create note
+const createNote = () => {
     return {
-        type: 'CREATE',
+        type: actionTypes.CREATE_NOTE,
+        payload: {
+            id:    uuid.v4(),
+            task: 'New Task',
+        },
     }
 }
-export const update = () => {
+
+// update task
+const updateNote = (id, task) => {
     return {
-        type: 'UPDATE',
+        type: actionTypes.UPDATE_NOTE,
+        payload: {
+            id,
+            task,
+        },
     }
 }
-export const delete = () => {
+
+// delete note
+const deleteNote = (id) => {
     return {
-        type: 'DELETE',
+        type: actionTypes.DELETE_NOTE,
+        payload: {
+            id,
+        }
     }
+}
+
+// export
+export default {
+    createNote,
+    updateNote,
+    deleteNote,
 }

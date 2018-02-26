@@ -9,8 +9,8 @@
         "syntax-class-properties",
         "syntax-decorators",
         "syntax-object-rest-spread",
-        "transform-class-properties",
         "transform-decorators-legacy",
+        "transform-class-properties",
         "transform-es2015-arrow-functions",
         "transform-object-assign",
         "transform-object-rest-spread"

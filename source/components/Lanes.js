@@ -1,17 +1,16 @@
 // modules
 import React from 'react'
-
-// components
+// component
 import Lane from './Lane'
 
-export default ({lanes}) => {
-    return (
+export default ({laneIds}) => {
+    return(
         <div className='lanes'>
-            {lanes.map(lane =>
+            {laneIds.map(laneId =>
                 <Lane
                     className='lane'
-                    key={lane.id}
-                    lane={lane}
+                    key={laneId}
+                    laneId={laneId}
                 />
             )}
         </div>

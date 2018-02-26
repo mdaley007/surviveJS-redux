@@ -1,15 +1,15 @@
 // import modules
-import { combineReducers } from 'redux'
+import { combineReducers } from 'redux-immutable'
 
 // import reducers
 import lanes from './reducer-lanes'
-import notes  from './reducer-notes'
+import notes from './reducer-notes'
 
 // combine reducers
-const allReducers = combineReducers({
+const rootReducer = combineReducers({
     lanes,
     notes,
 })
 
 // export reducers
-export default allReducers
+export default rootReducer
