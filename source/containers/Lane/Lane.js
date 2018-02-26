@@ -3,15 +3,16 @@ import   React                from 'react'
 import { DropTarget }         from 'react-dnd'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
+
+// style
+import Style from './Lane.css'
+
 // constants
-import ItemTypes from '../constants/itemTypes'
+import ItemTypes from '../../constants/itemTypes'
+
 // components
-import Editable from './Editable'
-import Notes    from './Notes'
-// actions
-import laneActions   from '../actions/actions-lanes'
-import noteActions   from '../actions/actions-notes'
-import laneSelectors from '../selectors/selectors-lanes'
+import Editable from '../../components/Editable'
+import Notes    from '../../components/Notes'
 
 // note-target-config
 const noteTarget = {
@@ -93,6 +94,10 @@ export default class Lane extends React.Component {
 }
 
 // smart-component features
+import laneSelectors from './lane-selectors'
+import laneActions   from './lane-actions'
+import noteActions   from '../Note/note-actions'
+
 const mapStateToProps = (state, props) => {
     const laneId = props.laneId
 

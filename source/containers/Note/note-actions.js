@@ -1,7 +1,7 @@
 // modules
 import uuid from 'uuid'
 // constants
-import actionTypes from '../constants/actionTypes'
+import actionTypes from '../../constants/actionTypes'
 
 // create note
 const createNote = () => {

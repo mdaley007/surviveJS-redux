@@ -1,7 +1,7 @@
 // modules
 import Immutable, { Map } from 'immutable'
 // constants
-import actionTypes from '../constants/actionTypes'
+import actionTypes from '../../constants/actionTypes'
 
 const initialState = Immutable.fromJS({
     entities: {},

@@ -4,13 +4,16 @@ import { DragSource,
          DropTarget }         from 'react-dnd'
 import { bindActionCreators } from 'redux'
 import { connect }            from 'react-redux'
+
+// style
+import Style from './Note.css'
+
 // constants
-import ItemTypes from '../constants/itemTypes'
+import ItemTypes from '../../constants/itemTypes'
+
 // components
-import Editable from './Editable'
-// actions
-import noteActions from   '../actions/actions-notes'
-import noteSelectors from '../selectors/selectors-notes'
+import Editable from '../../components/Editable'
+
 // note-source-config
 const noteSource = {
     beginDrag(props) {
@@ -81,6 +84,9 @@ export default class Note extends React.Component {
 }  // end of class
 
 // smart-component features
+import noteActions   from './note-actions'
+import noteSelectors from './note-selectors'
+
 const mapStateToProps = (state, props) => {
     const noteId = props.noteId
 

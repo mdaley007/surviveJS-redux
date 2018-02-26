@@ -1,3 +1,14 @@
+:root {
+    --ROred:  rgb(196, 18,  48);
+    --blue:   rgb(149, 168, 202);
+    --green:  rgb(178, 187, 30);
+    --orange: rgb(243, 143, 29);
+
+    --darkRed:    rgb(152, 0,   46);
+    --darkBlue:   rgb(0,   70,  127);
+    --darkGreen:  rgb(109, 141, 35);
+    --darkOrange: rgb(185, 89,  21);
+}
 body {
     background: cornsilk;
     font-family: sans-serif;

@@ -1,14 +1,18 @@
 // modules
 import React from 'react'
+
+// style
+import Style from './Lanes.css'
+
 // component
-import Lane from './Lane'
+import Lane from '../../containers/Lane'
 
 export default ({laneIds}) => {
     return(
-        <div className='lanes'>
+        <div>
             {laneIds.map(laneId =>
                 <Lane
-                    className='lane'
+                    className={Style.lane}
                     key={laneId}
                     laneId={laneId}
                 />

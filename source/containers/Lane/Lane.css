@@ -1,7 +1,3 @@
-body {
-    background: cornsilk;
-    font-family: sans-serif;
-}
 .lane {
     display: inline-block;
 
@@ -25,13 +21,13 @@ body {
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
 }
-.lane-name {
-    float: left;
-}
 .lane-add-note {
     float: left;
 
     margin-right: 0.5em;
+}
+.lane-name {
+    float: left;
 }
 .lane-delete {
     float: right;
@@ -61,41 +57,4 @@ body {
 .add-note {
     background-color: #fdfdfd;
     border: 1px solid #ccc;
-}
-.notes {
-    margin: 0.5em;
-    padding-left: 0;
-
-    max-width: 10em;
-    list-style: none;
-}
-.note {
-    margin-bottom: 0.5em;
-    padding: 0.5em;
-
-    background-color: #fdfdfd;
-    box-shadow: 0 0 0.3em 0.03em rgba(0, 0, 0, 0.3);
-}
-.note:hover {
-    box-shadow: 0 0 0.3em 0.03em rgba(0, 0, 0, 0.7);
-
-    transition: 0.6s;
-}
-.note .value {
-    display: inline-block;
-}
-.note .delete {
-    float: right;
-
-    padding: 0;
-
-    background-color: #fdfdfd;
-    border: none;
-
-    cursor: pointer;
-
-    visibility: hidden;
-}
-.note:hover .delete {
-    visibility: visible;
 }

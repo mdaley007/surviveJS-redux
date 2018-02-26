@@ -71,4 +71,4 @@ export default class Editable extends React.Component {
 
         setEditing(false)
     }
-}  // end of class
+}

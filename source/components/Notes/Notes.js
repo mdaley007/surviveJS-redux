@@ -1,11 +1,16 @@
 // modules
 import React from 'react'
+
+// style
+import Style from './Notes.css'
+
 // components
-import Editable from './Editable'
-import Note from './Note'
+import Editable from '../Editable'
+
+// containers
+import Note from '../../containers/Note'
 
 export default ({notes, onDelete, onMove}) => {
-
     return (
         <ul className='notes'>
             {notes.map(noteId =>
@@ -25,5 +30,3 @@ export default ({notes, onDelete, onMove}) => {
         </ul>
     )
 }
-/*
-onMove={({sourceId, targetId}) => console.log('source: ${sourceId}, target: ${targetId}')}*/
