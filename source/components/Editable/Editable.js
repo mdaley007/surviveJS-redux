@@ -34,26 +34,26 @@ export default class Editable extends React.Component {
         )
     }
     renderValue = () => {
-        const {value, onDelete, setEditing, styleClass} = this.props
+        const { value, onDelete, setEditing, styleValue } = this.props
 
         return (
             <div
-                className={styleClass}
+                className={styleValue}
                 onClick={() => setEditing(true)}
             >
-                <span className='value'>{value}</span>
+                <span>{value}</span>
                 { onDelete ? this.renderDelete() : null }
             </div>
         )
     }
     renderDelete = () => {
-        const onDelete = this.props.onDelete
+        const { onDelete, styleDelete } = this.props
 
         return (
             <button
-                className='delete'
+                className={styleDelete}
                 onClick={onDelete}
-            >x</button>
+            >X</button>
         )
     }
     checkEnter = (e) => {

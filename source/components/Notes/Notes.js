@@ -1,31 +1,20 @@
 // modules
 import React from 'react'
-
-// style
-import Style from './Notes.css'
-
 // components
 import Editable from '../Editable'
-
 // containers
 import Note from '../../containers/Note'
 
 export default ({notes, onDelete, onMove}) => {
     return (
-        <ul className='notes'>
+        <ul>
             {notes.map(noteId =>
-                <li
+                <Note
                     key={noteId}
-                >
-
-                    <Note
-                        styleClass='note'
-                        noteId={noteId}
-                        onDelete={onDelete.bind(null, noteId)}
-                        onMove={onMove}
-                   />
-
-                </li>
+                    noteId={noteId}
+                    onDelete={onDelete.bind(null, noteId)}
+                    onMove={onMove}
+               />
             )}
         </ul>
     )

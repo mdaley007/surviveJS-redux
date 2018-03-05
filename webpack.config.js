@@ -90,7 +90,6 @@ switch (TARGET) {
                             use: [
                                 {
                                     loader: 'css-loader',
-                                    /*
                                     options: {
                                         camelCase: true,
                                         importLoaders: 1,
@@ -98,7 +97,6 @@ switch (TARGET) {
                                         minimize: true,
                                         modules: true,
                                     },
-                                    */
                                 },
                                 {
                                     loader: 'postcss-loader',
@@ -144,14 +142,12 @@ switch (TARGET) {
                             },
                             {
                                 loader: 'css-loader',
-                                /*
                                 options: {
                                     camelCase: true,
                                     importLoaders: 1,
                                     localIdentName: '[name]-[local]-[hash:base64:6]',
                                     modules: true,
                                 },
-                                */
                             },
                             {
                                 loader: 'postcss-loader',

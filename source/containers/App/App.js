@@ -4,10 +4,8 @@ import { DragDropContext }    from 'react-dnd'
 import   HTML5Backend         from 'react-dnd-html5-backend'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
-
 // style
-import Style from './App.css'
-
+import style from './App.css'
 // components
 import Lanes from '../../components/Lanes'
 
@@ -22,7 +20,7 @@ export default class App extends React.Component {
             <div>
 
                 <button
-                    className={Style.addLane}
+                    className={style.addLane}
                     onClick={() => createLane()}
                 >+</button>
 

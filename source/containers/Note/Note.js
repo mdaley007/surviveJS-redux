@@ -4,17 +4,14 @@ import { DragSource,
          DropTarget }         from 'react-dnd'
 import { bindActionCreators } from 'redux'
 import { connect }            from 'react-redux'
-
 // style
-import Style from './Note.css'
-
+import style from './Note.css'
 // constants
 import ItemTypes from '../../constants/itemTypes'
-
 // components
 import Editable from '../../components/Editable'
 
-// note-source-config
+// dnd-configs
 const noteSource = {
     beginDrag(props) {
         return {
@@ -25,7 +22,6 @@ const noteSource = {
         return props.noteId === monitor.getItem().id
     }
 }
-// note-target-config
 const noteTarget = {
     hover(targetProps, monitor) {
         const sourceId = monitor.getItem().id
@@ -53,27 +49,27 @@ export default class Note extends React.Component {
             editing: false,
         }
     }
-
     render() {
         const   editing = this.state.editing
-        const { connectDragSource, connectDropTarget, isDragging, note, styleClass, onDelete, onMove, updateNote } = this.props
+        const { connectDragSource, connectDropTarget, isDragging, note, onDelete, onMove, updateNote } = this.props
         const noteId = note.get('id')
         const noteTask = note.get('task')
         const dragSource = editing ? a => a : connectDragSource
 
         return dragSource(connectDropTarget(
-            <div style={{
+            <li style={{
                 opacity: isDragging ? 0 : 1
             }}>
                 <Editable
-                    styleClass={styleClass}
                     editing={editing}
+                    setEditing={this.setEditing}
                     value={noteTask}
+                    styleValue={style.note}
+                    styleDelete={style.delete}
                     onDelete={onDelete}
                     onEdit={updateNote.bind(null, noteId)}
-                    setEditing={this.setEditing}
                 />
-            </div>
+            </li>
         ))
     }
     setEditing = (newState) => {
@@ -81,7 +77,7 @@ export default class Note extends React.Component {
             editing: newState
         })
     }
-}  // end of class
+}
 
 // smart-component features
 import noteActions   from './note-actions'

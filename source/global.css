@@ -1,0 +1,22 @@
+:root {
+    --borderColor:    #ccc;
+    --headerColor:    #333;
+    --laneBackground: #efefef;
+    --laneRadius:     0.5em;
+    --noteBackground: #fdfdfd;
+    --noteText:       #333;
+    --textColor:      #efefef;
+}
+* {
+    border: none;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background: cornsilk;
+    font-family: sans-serif;
+}
+li {
+    list-style: none;
+}

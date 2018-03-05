@@ -3,13 +3,10 @@ import   React                from 'react'
 import { DropTarget }         from 'react-dnd'
 import { connect }            from 'react-redux'
 import { bindActionCreators } from 'redux'
-
 // style
-import Style from './Lane.css'
-
+import style from './Lane.css'
 // constants
 import ItemTypes from '../../constants/itemTypes'
-
 // components
 import Editable from '../../components/Editable'
 import Notes    from '../../components/Notes'
@@ -21,6 +18,7 @@ const noteTarget = {
         const targetId = targetProps.laneId
         const {lane, attachNote} = targetProps
 
+        // only empty lanes are targets...
         if(lane.get('notes').count() === 0) {
             attachNote(targetId, sourceId)
         }
@@ -47,30 +45,30 @@ export default class Lane extends React.Component {
         const laneNotes = lane.get('notes')
 
         return connectDropTarget(
-            <div className='lane'>
+            <div className={style.lane}>
 
-                <div className='lane-header'>
-                    <div className='lane-add-note'>
+                <div className={style.laneHeader}>
+                    <div className={style.laneAddNote}>
                         <button onClick={this.addNote}>+</button>
                     </div>
                     <Editable
-                        styleClass='lane-name'
-                        editing={editing}
                         value={laneName}
+                        styleValue={style.laneName}
                         onEdit={updateLane.bind(null, laneId)}
+                        editing={editing}
                         setEditing={this.setEditing}
                     />
-                    <div className='lane-delete'>
-                        <button onClick={() => deleteLane(lane)}>x</button>
+                    <div className={style.laneDelete}>
+                        <button onClick={() => deleteLane(lane)}>X</button>
                     </div>
                 </div>
-
-                <Notes
-                    notes={laneNotes}
-                    onDelete={this.deleteNote}
-                    onMove={moveNote}
-                />
-
+                <div className={style.laneNotes}>
+                    <Notes
+                        notes={laneNotes}
+                        onDelete={this.deleteNote}
+                        onMove={moveNote}
+                    />
+                </div>
             </div>
         )
     }

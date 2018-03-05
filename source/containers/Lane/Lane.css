@@ -1,60 +1,46 @@
 .lane {
+    background-color: var(--laneBackground);
+    border: 1px solid var(--borderColor);
+    border-radius:    var(--laneRadius);
     display: inline-block;
-
     margin: 1em;
-
-    background-color: #efefef;
-    border: 1px solid #ccc;
-    border-radius: 0.5em;
-
     min-width: 10em;
     vertical-align: top;
 }
 .lane-header {
+    background-color:        var(--headerColor);
+    border-top-left-radius:  var(--laneRadius);
+    border-top-right-radius: var(--laneRadius);
+    color: var(--textColor);
     overflow: auto;
-
     padding: 1em;
 
-    color: #efefef;
-    background-color: #333;
-
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em;
 }
-.lane-add-note {
+.lane-add-note button {
+    background-color: var(--noteBackground);
+    border: 1px solid var(--borderColor);
+    cursor: pointer;
     float: left;
-
     margin-right: 0.5em;
+    padding: 0px 4px;
 }
 .lane-name {
     float: left;
 }
 .lane-delete {
     float: right;
-
     margin-left: 0.5em;
-
     visibility: hidden;
+}
+.lane-delete button {
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--textColor);
+    cursor: pointer;
 }
 .lane-header:hover .lane-delete {
     visibility: visible;
 }
-.add-lane, .lane-add-note button {
-    cursor: pointer;
-
-    background-color: #fdfdfd;
-    border: 1px solid #ccc;
-}
-.lane-delete button {
-    padding: 0;
-
-    cursor: pointer;
-
-    color: white;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0;
-}
-.add-note {
-    background-color: #fdfdfd;
-    border: 1px solid #ccc;
+.lane-notes {
+    margin: 0.5em;
+    margin-bottom: 0em;
 }
