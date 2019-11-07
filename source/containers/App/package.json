@@ -2,7 +2,7 @@
   "name": "survive-js-redux-app",
   "version": "1.0.0",
   "description": "SuviveJs-Redux App",
-  "main": "App.js",
+  "main": "App",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

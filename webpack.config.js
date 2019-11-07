@@ -22,8 +22,9 @@ const HTML = {
 
 // define paths
 const PATHS = {
-    entry:   Path.join(__dirname,  packageJson.main),
+    main:    Path.join(__dirname,  packageJson.main),
     favicon: Path.join(__dirname, 'source/media/favicon.ico'),
+    modules: Path.join(__dirname, 'node_modules'),
     output:  Path.join(__dirname, 'build'),
     test:    Path.join(__dirname, 'tests'),
 }
@@ -31,14 +32,13 @@ const PATHS = {
 // define config common to all TARGETs
 const common = {
     entry: {
-        root: PATHS.entry,
+        main: PATHS.main,
     },
     module: {
         rules: [
             {
-                test: /\.js$/,
-                use: ['babel-loader?cacheDirectory'],
-                include: PATHS.entry,
+                test: /\.jsx?$/,
+                use: 'babel-loader?cacheDirectory',
             },
             {
                 test: /\.(jpe?g|png|gif|svg)$/i,
@@ -68,7 +68,7 @@ const common = {
         }),
     ],
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.js', 'jsx', 'json'],
     },
 }
 
@@ -81,6 +81,7 @@ switch (TARGET) {
             entry: {
                 vendor: Object.keys(packageJson.dependencies),
             },
+            mode: 'production',
             module: {
                 rules: [
                     {
@@ -132,6 +133,7 @@ switch (TARGET) {
                 host: process.env.HOST,
                 port: process.env.PORT,
             },
+            mode: 'development',
             module: {
                 rules: [
                     {

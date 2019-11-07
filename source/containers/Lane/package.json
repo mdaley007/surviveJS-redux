@@ -2,7 +2,7 @@
   "name": "lane",
   "version": "1.0.0",
   "description": "SuviveJs-Redux Lane",
-  "main": "Lane.js",
+  "main": "Lane",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
